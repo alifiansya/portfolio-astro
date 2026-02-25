@@ -19,7 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
         `;
         console.log(botPrompt)
 
-        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent", {
+        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent", {
             method: "POST",
             body: JSON.stringify({
                 "contents": [
@@ -37,7 +37,15 @@ export const POST: APIRoute = async ({ request }) => {
                 "X-goog-api-key": apiKey ?? ""
             }
         })    
+        
         const botResponse = await response.json()
+        if (!response.ok) {
+          console.error("Gemini API Error:", botResponse);
+          return new Response(
+            JSON.stringify({ reply: "Gemini API error" }),
+            { status: response.status }
+          );
+        }
         const botText = botResponse.candidates[0].content.parts[0].text
     
         return new Response(
@@ -45,9 +53,10 @@ export const POST: APIRoute = async ({ request }) => {
             { status: 200 }
         );
     }
-    catch {
+    catch (e){
+        console.log(e)
         return new Response(
-            JSON.stringify({ reply: `Server Error, Please try again later.` }),
+            JSON.stringify({ reply: `Server Error, Please try again later.`, error: e}),
             { status: 500 }
         );
     }
