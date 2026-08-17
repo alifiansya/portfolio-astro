@@ -19,7 +19,7 @@ const socialLinks = [
 const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:clamp(6rem,15vw,12rem)]";
 ---
 
-<Layout>
+<Layout title="Alifiansyah | BASE Stack Dev 🔥">
 	<Navbar class={"px-16 " + mainPadding + " fixed top-0 w-full bg-white transition-shadow duration-300 "}, linkItems={en.navbarItems}, languageItems={en.languageItems}, currentLanguage={en.language}/>
 	<main>
 		<section id="home" class={"flex flex-col item-center justify-center h-screen text-center " + "px-16 " + mainPadding}>
@@ -96,14 +96,26 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 	</footer>
 
 	<!-- Chatbot Section -->
-	<div class="fixed bottom-6 right-6">
-		<button id="chat-toggle" class="flex fixed bottom-6 items-center right-6 p-4 gap-x-2 rounded-full bg-amber-700 transition duration-300 ease-in-out hover:bg-amber-900" onclick="">
-			<span class="text-white font-semibold text-lg">Ask MikanAI</span>
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 text-white">
+	<div class="fixed bottom-6 right-6 z-50">
+		<button
+			id="chat-toggle"
+			class="flex fixed bottom-6 items-center right-6 p-4 gap-x-2 rounded-full bg-amber-700 transition-all duration-300 ease-in-out hover:bg-amber-900 active:scale-90 shadow-lg hover:shadow-xl"
+			aria-expanded="false"
+			aria-controls="chat-box"
+		>
+			<span id="chat-toggle-label" class="text-white font-semibold text-lg">Ask MikanAI</span>
+			<svg id="chat-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 text-white transition-transform duration-300">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-			</svg> 
+			</svg>
+			<svg id="chat-icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 text-white hidden transition-transform duration-300">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+			</svg>
 		</button>
-		<div id="chat-box" class="hidden flex flex-col bg-amber-100 w-80 h-96 mb-20 border-amber-900 rounded-xl shadow">
+
+		<div
+			id="chat-box"
+			class="flex flex-col bg-amber-100 w-80 h-96 mb-20 border-amber-900 rounded-xl shadow-xl origin-bottom-right transition-all duration-300 ease-out opacity-0 scale-90 translate-y-4 pointer-events-none"
+		>
 			<div class="flex flex-row bg-amber-300 rounded-t-xl border-b-2 border-b-amber-50 px-4 py-3 gap-2">
 				<img src="/images/logo.webp" alt="Mikan Logo" class="bg-gray-900 rounded-full rotate-5 w-12 border-2 border-amber-100"/>
 				<div>
@@ -111,17 +123,16 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 					<p class="text-sm">{en.bot.description.information}</p>
 				</div>
 			</div>
-			<div id="chat-bubble" class="flex flex-col bg-gradient-to-b from-amber-50 to-white overflow-y-auto flex-1 px-4 py-2 gap-2">
-				
-				<div id="container" class=`flex items-start gap-2.5 text-gray-900` >
+			<div id="chat-bubble" class="flex flex-col bg-gradient-to-b from-amber-50 to-white overflow-y-auto flex-1 px-4 py-2 gap-2 scroll-smooth">
+				<div id="container" class="chat-msg flex items-start gap-2.5 text-gray-900">
 					<div class="flex flex-col max-w-[320px] p-3 border-gray-200 bg-amber-200 rounded-xl rounded-tl-none">
-					<p id="chat-opener" class="text-sm font-normal">{en.bot.description.chatOpener}</p>
+						<p id="chat-opener" class="text-sm font-normal">{en.bot.description.chatOpener}</p>
 					</div>
 				</div>
 			</div>
 			<div class="flex flex-row bg-amber-100 rounded-b-xl p-2 gap-2">
-				<input id="user-prompt" type="text" placeholder="Ask MikanAI!" class="bg-white border border-amber-300 rounded-2xl px-4 py-2 flex-1">
-				<button id="submit-user-prompt" class="bg-amber-500 px-2 rounded-xl transition duration-300 ease-in-out hover:bg-amber-700">
+				<input id="user-prompt" type="text" placeholder="Ask MikanAI!" class="bg-white border border-amber-300 rounded-2xl px-4 py-2 flex-1 transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400">
+				<button id="submit-user-prompt" class="bg-amber-500 px-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-amber-700 active:scale-90">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 text-white">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
 					  </svg>					  
@@ -131,10 +142,49 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 	</div>
 </Layout>
 
+<style>
+	@keyframes message-in {
+		from {
+			opacity: 0;
+			transform: translateY(8px) scale(0.97);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	.chat-msg {
+		animation: message-in 0.25s ease-out;
+	}
+
+	@keyframes typing-bounce {
+		0%, 80%, 100% {
+			transform: translateY(0);
+			opacity: 0.4;
+		}
+		40% {
+			transform: translateY(-4px);
+			opacity: 1;
+		}
+	}
+
+	.typing-dot {
+		animation: typing-bounce 1.2s infinite ease-in-out;
+	}
+	.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+	.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+</style>
+
 <script>
 	let chatHistory = [document.getElementById("chat-opener")?.innerText];
 	let chatCounter = 0;
+	let isChatOpen = false;
+
 	const chatToggleButton = document.getElementById("chat-toggle");
+	const chatToggleLabel = document.getElementById("chat-toggle-label");
+	const chatIconOpen = document.getElementById("chat-icon-open");
+	const chatIconClose = document.getElementById("chat-icon-close");
 	const chatBoxContainer = document.getElementById("chat-box");
 
 	const chatBubbleContainer = document.getElementById("chat-bubble");
@@ -146,7 +196,24 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 	})
 
 	chatToggleButton?.addEventListener("click", () => {
-		chatBoxContainer?.classList.toggle("hidden");
+		isChatOpen = !isChatOpen;
+		chatToggleButton.setAttribute("aria-expanded", String(isChatOpen));
+
+		if (isChatOpen) {
+			chatBoxContainer?.classList.remove("opacity-0", "scale-90", "translate-y-4", "pointer-events-none");
+			chatBoxContainer?.classList.add("opacity-100", "scale-100", "translate-y-0");
+			chatIconOpen?.classList.add("hidden");
+			chatIconClose?.classList.remove("hidden");
+			if (chatToggleLabel) chatToggleLabel.textContent = "Close";
+			scrollChatToBottom();
+			promptTextBox?.focus();
+		} else {
+			chatBoxContainer?.classList.add("opacity-0", "scale-90", "translate-y-4", "pointer-events-none");
+			chatBoxContainer?.classList.remove("opacity-100", "scale-100", "translate-y-0");
+			chatIconOpen?.classList.remove("hidden");
+			chatIconClose?.classList.add("hidden");
+			if (chatToggleLabel) chatToggleLabel.textContent = "Ask MikanAI";
+		}
 	})
 
 	promptTextBox.addEventListener('keydown', function(event) {
@@ -167,10 +234,16 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 	  });
 	});
 
+	function scrollChatToBottom() {
+		if (chatBubbleContainer) {
+			chatBubbleContainer.scrollTop = chatBubbleContainer.scrollHeight;
+		}
+	}
+
 	function createChatBubble(text:string, sender = "user", counter:number) {
 		const chatBubble = document.createElement("div");
 		chatBubble.id = `${sender}-bubble-${counter}`;
-		chatBubble.className = `flex items-start gap-2.5 text-gray-900 ${sender === "user" ? "justify-end" : ""}`;
+		chatBubble.className = `chat-msg flex items-start gap-2.5 text-gray-900 ${sender === "user" ? "justify-end" : ""}`;
 
 		// Inner wrapper
 		const inner = document.createElement("div");
@@ -191,6 +264,24 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 		return chatBubble;
 	}
 
+	function createTypingIndicator() {
+		const wrapper = document.createElement("div");
+		wrapper.id = "typing-indicator";
+		wrapper.className = "chat-msg flex items-start gap-2.5 text-gray-900";
+
+		const inner = document.createElement("div");
+		inner.className = "flex items-center gap-1 p-3 border-gray-200 bg-amber-200 rounded-xl rounded-tl-none";
+
+		for (let i = 0; i < 3; i++) {
+			const dot = document.createElement("span");
+			dot.className = "typing-dot w-1.5 h-1.5 bg-amber-800 rounded-full inline-block";
+			inner.appendChild(dot);
+		}
+
+		wrapper.appendChild(inner);
+		return wrapper;
+	}
+
 	function submitPrompt() {
 		const userPrompt = promptTextBox.value.trim();
 		if (!userPrompt) return;
@@ -199,13 +290,22 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 		// Create container
 		const userChatBubble = createChatBubble(userPrompt, "user", chatCounter);
 		chatBubbleContainer?.appendChild(userChatBubble);
+		scrollChatToBottom();
+
+		const typingIndicator = createTypingIndicator();
+		chatBubbleContainer?.appendChild(typingIndicator);
+		scrollChatToBottom();
+
 		(async () => {
 			const botResponse = await sendMessage(userPrompt);
+			document.getElementById("typing-indicator")?.remove();
+
 			const botChatBubble = createChatBubble(botResponse.reply, "bot", chatCounter);
 			chatHistory.push("user:" + userPrompt);
 			chatHistory.push("MikanAI:" + botResponse.reply);
 			chatCounter += 1;
 			chatBubbleContainer?.appendChild(botChatBubble);
+			scrollChatToBottom();
 		})();
 	}
 
@@ -221,4 +321,3 @@ const mainPadding = "md:[padding-right:clamp(6rem,15vw,12rem)] md:[padding-left:
 	}
 </script>
 <LocaleRedirect/>
-
