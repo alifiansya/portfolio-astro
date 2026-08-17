@@ -11,6 +11,7 @@ export const POST: APIRoute = async ({ request }) => {
         const { message, history, counter } = await request.json();
 
         const apiKey = process.env.GEMINI_API_KEY;
+        console.log(apiKey);
         const botPrompt = `    
         ${cvText}
         chat history: {${history}}
@@ -19,7 +20,7 @@ export const POST: APIRoute = async ({ request }) => {
         `;
         console.log(botPrompt)
 
-        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent", {
+        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent", {
             method: "POST",
             body: JSON.stringify({
                 "contents": [
